@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Service
@@ -58,12 +59,43 @@ public class UserServiceImpl implements UserService {
         try{
             User user = getById(id);
             if(userRepo.existsByEmailOrUsername(userUpdateRequest.getEmail(), userUpdateRequest.getUsername())) {
-                throw new SpotifyException(StatusMessage.DUPLICATE_USER);
+                if(!userUpdateRequest.getEmail().equalsIgnoreCase(user.getEmail()) && !userUpdateRequest.getUsername().equalsIgnoreCase(user.getUsername())) {
+                    throw new SpotifyException(StatusMessage.DUPLICATE_USER);
+                }
             }if(!user.getEmail().equalsIgnoreCase(userUpdateRequest.getEmail())) {
                 ConfirmToken confirmToken = new ConfirmToken(user, userUpdateRequest.getEmail());
                 sendConfirmMail(confirmToken, user);
             }
             user.setUsername(userUpdateRequest.getUsername());
+            UserResponse userResponse = modelMapper.map(user, UserResponse.class);
+            return ResponseModel.<UserResponse>builder()
+                    .result(userResponse)
+                    .message(StatusMessage.SUCCESS)
+                    .error(false)
+                    .build();
+
+        }catch (SpotifyException ex){
+            return ResponseModel.<UserResponse>builder()
+                    .message(ex.getMessage())
+                    .error(true)
+                    .build();
+        }catch (RuntimeException ex){
+            return ResponseModel.<UserResponse>builder()
+                    .message(ex.getMessage())
+                    .error(true)
+                    .build();
+        }catch (Exception ex){
+            return ResponseModel.<UserResponse>builder()
+                    .message(ex.getMessage())
+                    .error(true)
+                    .build();
+        }
+    }
+
+    @Override
+    public ResponseModel<UserResponse> get(Long id) {
+        try{
+            User user = getById(id);
             UserResponse userResponse = modelMapper.map(user, UserResponse.class);
             return ResponseModel.<UserResponse>builder()
                     .result(userResponse)
@@ -96,8 +128,8 @@ public class UserServiceImpl implements UserService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontConfirmMailUrl + "?token=" + confirmToken.getToken();
-        helper.setBcc("Spotify");
-        helper.setCc("Spotify");
+        helper.setSubject("Confirm your mail address");
+        helper.setFrom(new InternetAddress("desofme@gmail.com", "Spotify"));
         helper.setTo(confirmToken.getEmail());
         helper.setText(getUpdateMailText(link, user.getUsername()), true);
         javaMailSender.send(message);
@@ -161,7 +193,7 @@ public class UserServiceImpl implements UserService {
                 "<h3>Hi, "+username+"</h3>\n" +
                 "<p>Click the buton and confirm your email address. Don't forget the enjoy listening musics</p>\n" +
                 "\n" +
-                "<a class=\"btn-confirm\" src'" + confirmLink + "'>Confirm</a>\n" +
+                "<a class='btn-confirm' href='" + confirmLink + "'>Confirm</a>\n" +
                 "</body>\n" +
                 "</html>";
 

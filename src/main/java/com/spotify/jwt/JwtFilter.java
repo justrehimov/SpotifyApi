@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
            filterChain.doFilter(request, response);
        }else{
            String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-           String username = null;
+           Long id = null;
            String token = null;
 
            if (header != null && header.contains("Bearer ")) {
@@ -41,8 +41,8 @@ public class JwtFilter extends OncePerRequestFilter {
                if (!jwtService.isValidToken(token)){
                    throw new SpotifyException(StatusMessage.ACCESS_TOKEN_IS_NOT_VALID);
                }
-               username = jwtService.getUsernameToken(token);
-               User user = userService.getByUsername(username);
+               id = Long.valueOf(jwtService.getIdFromToken(token));
+               User user = userService.getById(id);
                UsernamePasswordAuthenticationToken authenticationToken =
                        new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                SecurityContextHolder.getContext().setAuthentication(authenticationToken);

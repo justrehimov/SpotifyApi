@@ -1,5 +1,6 @@
 package com.spotify.jwt;
 
+import com.spotify.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,8 +21,8 @@ public class JwtService {
     @Value("${jwt.token.issuer}")
     private String JWT_ISSUER;
 
-    public String generateToken(UserDetails userDetails){
-        return Jwts.builder().setSubject(userDetails.getUsername())
+    public String generateToken(User user){
+        return Jwts.builder().setSubject(user.getId().toString())
                 .setIssuer(JWT_ISSUER)
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(Date.from(Instant.now().plusSeconds(JWT_EXPIRED_TIME)))
@@ -30,6 +31,11 @@ public class JwtService {
     }
 
     public String getUsernameToken(String token){
+        Claims claims = getClaims(token);
+        return claims.getSubject();
+    }
+
+    public String getIdFromToken(String token){
         Claims claims = getClaims(token);
         return claims.getSubject();
     }

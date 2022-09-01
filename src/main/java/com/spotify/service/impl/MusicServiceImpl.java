@@ -16,6 +16,7 @@ import com.spotify.service.MusicService;
 import com.spotify.service.StorageService;
 import com.spotify.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MusicServiceImpl implements MusicService {
     private final UserService userService;
     private final MusicRepo musicRepo;
@@ -56,16 +58,19 @@ public class MusicServiceImpl implements MusicService {
                     .error(false)
                     .build();
         }catch (SpotifyException ex){
+            log.error("Error ", ex);
             return ResponseModel.<MusicResponse>builder()
                     .message(ex.getMessage())
                     .error(true)
                     .build();
         }catch (RuntimeException ex){
+            log.error("Error ", ex);
             return ResponseModel.<MusicResponse>builder()
                     .message(ex.getMessage())
                     .error(true)
                     .build();
         }catch (Exception ex){
+            log.error("Error ", ex);
             return ResponseModel.<MusicResponse>builder()
                     .message(ex.getMessage())
                     .error(true)
