@@ -15,7 +15,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://clonespotify.w3spaces.com")
 public class AuthController {
     private final AuthService authService;
 

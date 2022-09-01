@@ -2,12 +2,15 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-34-242-8-97.eu-west-1.compute.amazonaws.com:5432/dc9r4h4n0hmnon
-    username: zmjxpjmdsdtaye
-    password: 243bf2a886a5c778ba408538ac39e9550942b7ee2c663953bc41a7f06ad61ca6
+      url: jdbc:postgresql://localhost:5432/spotify
+      username: postgres
+      password: postgres
+#    url: jdbc:postgresql://ec2-34-242-8-97.eu-west-1.compute.amazonaws.com:5432/dc9r4h4n0hmnon
+#    username: zmjxpjmdsdtaye
+#    password: 243bf2a886a5c778ba408538ac39e9550942b7ee2c663953bc41a7f06ad61ca6
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
@@ -24,3 +27,8 @@ spring:
           timeout: 25000
     protocol: smtp
     test-connection: false
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB

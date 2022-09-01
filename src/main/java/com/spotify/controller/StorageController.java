@@ -44,4 +44,9 @@ public class StorageController {
                 .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+storage.getFileName()+"\"")
                 .body(new ByteArrayResource(bytes));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseModel<StorageResponse> delete(@PathVariable("id") Long id){
+        return storageService.delete(id);
+    }
 }
