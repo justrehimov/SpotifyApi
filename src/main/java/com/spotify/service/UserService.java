@@ -13,4 +13,6 @@ public interface UserService {
     User getById(Long id);
 
     ResponseModel<UserResponse> update(UserUpdateRequest userRequest, Long id);
+
+    ResponseModel<UserResponse> get(Long id);
 }

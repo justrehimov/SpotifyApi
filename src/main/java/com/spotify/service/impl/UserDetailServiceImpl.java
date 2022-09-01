@@ -17,7 +17,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username)
+        return userRepo.findUserByEmailOrUsername(username)
                 .orElseThrow(()->new SpotifyException(StatusMessage.USER_NOT_FOUND));
     }
 }

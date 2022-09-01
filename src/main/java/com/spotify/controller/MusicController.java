@@ -31,4 +31,6 @@ public class MusicController {
     public ResponseModel<List<MusicResponse>> list(@RequestParam(value = "filter", required = false) String filter){
         return musicService.list(filter);
     }
+
+
 }
