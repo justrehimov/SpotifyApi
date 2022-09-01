@@ -1,2 +1,10 @@
-package com.spotify.dto.request;public class UserRequest {
+package com.spotify.dto.request;
+
+import lombok.Data;
+
+@Data
+public class UserRequest {
+    private String email;
+    private String username;
+    private String password;
 }
