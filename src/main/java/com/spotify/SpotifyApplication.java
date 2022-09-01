@@ -10,4 +10,5 @@ public class SpotifyApplication {
         SpringApplication.run(SpotifyApplication.class, args);
     }
 
+
 }
