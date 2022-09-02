@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontConfirmMailUrl + "?token=" + confirmToken.getToken();
         helper.setSubject("Confirm your mail address");
-        helper.setFrom(new InternetAddress("desofme@gmail.com", "Spotify"));
+        helper.setFrom(new InternetAddress("spoticloneacc@gmail.com", "Spotify"));
         helper.setTo(confirmToken.getEmail());
         helper.setText(getUpdateMailText(link, user.getUsername()), true);
         javaMailSender.send(message);

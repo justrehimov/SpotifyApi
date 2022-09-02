@@ -40,6 +40,7 @@ public class MusicServiceImpl implements MusicService {
     public ResponseModel<MusicResponse> save(MusicRequest musicRequest) {
         try{
             Music music = modelMapper.map(musicRequest, Music.class);
+            music.setId(null);
             Storage storageMusic = storageService.getById(musicRequest.getStorageMusicId());
             Storage storageImage = storageService.getById(musicRequest.getStorageImageId());
             User user = userService.getById(musicRequest.getUserId());

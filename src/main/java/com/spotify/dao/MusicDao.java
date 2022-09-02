@@ -27,8 +27,8 @@ public class MusicDao {
         String where = "";
         Map<String, Object> values = new HashMap<>();
         if(StringUtils.hasText(filter)){
-            where += "and lower(m.name) like lower(:filter) ";
-            values.put("filter", filter);
+            where += "and lower(m.name) like lower(:filter) or lower(m.artistName) like lower(:filter)";
+            values.put("filter", "%"+filter+"%");
         }
         if(StringUtils.hasText(where)){
             sql+= " where " + where.substring(3);

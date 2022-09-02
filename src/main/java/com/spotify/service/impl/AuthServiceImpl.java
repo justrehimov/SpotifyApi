@@ -239,7 +239,7 @@ public class AuthServiceImpl implements AuthService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontConfirmUrl + "?token=" + confirmToken.getToken();
-        helper.setFrom("desofme@gmail.com");
+        helper.setFrom("spoticloneacc@gmail.com");
         helper.setSubject("Confirm mail");
         helper.setTo(user.getEmail());
         helper.setText(getConfirmMailText(link, user.getUsername()), true);
@@ -253,7 +253,7 @@ public class AuthServiceImpl implements AuthService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontPasswordResetUrl + "?token=" + confirmToken.getToken();
-        helper.setFrom("desofme@gmail.com");
+        helper.setFrom("spoticloneacc@gmail.com");
         helper.setSubject("Confirm mail");
         helper.setTo(user.getEmail());
         helper.setText(getResetMailText(link, user.getUsername()), true);
