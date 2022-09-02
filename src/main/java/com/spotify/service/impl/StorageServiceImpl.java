@@ -73,7 +73,7 @@ public class StorageServiceImpl implements StorageService {
         storage.setFileName(uniqueFileName);
         storage.setUniqueName(uniqueFileName);
         Storage savedStorage = storageRepo.save(storage);
-        String downloadUrl = domain + "/storage/download/"+savedStorage.getId();
+        String downloadUrl = domain + "/api/storage/download/"+savedStorage.getId();
         savedStorage.setUrl(downloadUrl);
         if(savedStorage.getContentType().contains("image")){
             cropImageToSquare(localPath, localPath, extension);
