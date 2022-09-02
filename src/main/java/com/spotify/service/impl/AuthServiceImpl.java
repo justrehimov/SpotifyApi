@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Service
@@ -239,7 +240,7 @@ public class AuthServiceImpl implements AuthService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontConfirmUrl + "?token=" + confirmToken.getToken();
-        helper.setFrom("spoticloneacc@gmail.com");
+        helper.setFrom(new InternetAddress("spoticloneacc@gmail.com","Spotify"));
         helper.setSubject("Confirm mail");
         helper.setTo(user.getEmail());
         helper.setText(getConfirmMailText(link, user.getUsername()), true);
@@ -253,7 +254,7 @@ public class AuthServiceImpl implements AuthService {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String link = frontPasswordResetUrl + "?token=" + confirmToken.getToken();
-        helper.setFrom("spoticloneacc@gmail.com");
+        helper.setFrom(new InternetAddress("spoticloneacc@gmail.com","Spotify"));
         helper.setSubject("Confirm mail");
         helper.setTo(user.getEmail());
         helper.setText(getResetMailText(link, user.getUsername()), true);
