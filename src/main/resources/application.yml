@@ -7,7 +7,7 @@ spring:
     password: 243bf2a886a5c778ba408538ac39e9550942b7ee2c663953bc41a7f06ad61ca6
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
