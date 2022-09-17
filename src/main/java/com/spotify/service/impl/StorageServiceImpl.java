@@ -178,18 +178,18 @@ public class StorageServiceImpl implements StorageService {
 
     private String moveFolder(MultipartFile multipartFile, String uniqueName) throws IOException {
         byte[] bytes = multipartFile.getBytes();
-        File folder = new File("src/main/resources" + localPath);
+        File folder = new File(localPath);
         if(!folder.exists()){
             folder.mkdir();
         }
-        File file = new File("src/main/resources"+localPath+"/" + uniqueName);
+        File file = new File(localPath+"/" + uniqueName);
         if(!file.exists()){
             file.createNewFile();
         }
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(bytes);
         fos.close();
-        return "src/main/resources"+localPath+"/" + uniqueName;
+        return localPath+"/" + uniqueName;
     }
 
 
