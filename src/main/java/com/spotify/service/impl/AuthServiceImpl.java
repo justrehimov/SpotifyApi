@@ -51,6 +51,8 @@ public class AuthServiceImpl implements AuthService {
     @Value("${front.user.confirm.url}")
     private String frontConfirmUrl;
 
+    @Value("${app.root.path}")
+    private String rootPath;
     @Value(("${front.user.reset.password.url}"))
     private String frontPasswordResetUrl;
 
@@ -70,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
             return ResponseModel.<UserResponse>builder()
                     .result(userResponse)
                     .error(false)
-                    .message(StatusMessage.SUCCESS)
+                    .message(rootPath)
                     .build();
 
         }catch (SpotifyException ex){
