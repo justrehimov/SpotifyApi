@@ -79,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
             log.error("Error ", ex);
             return ResponseModel.<UserResponse>builder()
                     .error(true)
-                    .message(ex.getMessage())
+                    .message(rootPath)
                     .build();
         }catch (Exception ex){
             log.error("Error ", ex);
