@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -178,18 +179,18 @@ public class StorageServiceImpl implements StorageService {
 
     private String moveFolder(MultipartFile multipartFile, String uniqueName) throws IOException {
         byte[] bytes = multipartFile.getBytes();
-        File folder = new File(localPath);
+        File folder = new File(Paths.get(localPath).getParent().getFileName().toString());
         if(!folder.exists()){
             folder.mkdir();
         }
-        File file = new File(localPath+"/" + uniqueName);
+        File file = new File(Paths.get(localPath).getParent().getFileName().toString() + "/" + uniqueName);
         if(!file.exists()){
             file.createNewFile();
         }
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(bytes);
         fos.close();
-        return localPath+"/" + uniqueName;
+        return Paths.get(localPath).getParent().getFileName().toString() + "/" + uniqueName;
     }
 
 
